@@ -11,6 +11,19 @@ Welcome to the Service-Xone-BD Service Booking and Management Website repository
 
 The Service-Xone-BD Service Booking and Management Website is a powerful web application that enables users to book services effortlessly. The project focuses on usability, accessibility, and overall user satisfaction, meeting a variety of assignment requirements.
 
+🛠️ Complete marketplace built from scratch in Next.js 14
+💻 Beautiful landing page & product pages included
+🎨 Custom artwork included
+💳 Full admin dashboard
+🛍️ Users can purchase and sell their own products
+🛒 Locally persisted show booking details dashboard
+🔑 Authentication using Payload
+🖥️ Learn how to self-host Next.js
+🌟 Clean, modern UI using and-design
+✉️ Beautiful emails for signing up and after purchase
+✅ Admins can verify products to ensure high quality
+⌨️ 100% written in TypeScript
+🎁 ...much more
 ## Technology Stack
 
 The project is built with the following technologies:
