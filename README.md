@@ -4,8 +4,8 @@ Welcome to the Service-Xone-BD Service Booking and Management Website repository
 
 ## Live Site
 
-- **Service-Xone-BD Front-End:** [Live Site](https://Service-Xone-BD-front-end.vercel.app/)
-- **Service-Xone-BD Dashboard:** [Admin Dashboard](https://Service-Xone-BD-dashboard.vercel.app/)
+- **Service-Xone-BD Front-End:** [Live Site](https://service-xone-bd.vercel.app/)
+- **Service-Xone-BD Dashboard:** [Admin Dashboard](https://service-zone-bd-dashboard.vercel.app/login)
 
 ## Project Overview
 
