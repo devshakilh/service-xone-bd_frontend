@@ -1,0 +1,42 @@
+.your-background {
+    background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.90) 100%), 
+               
+}
+
+
+
+/* In your ca.css or another global style file */
+.carousel .slick-slide {
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .carousel .slick-slide:hover {
+    transform: scale(1.05);
+  }
+  
+  .your-background {
+    background: rgba(0, 0, 0, 0.5); /* For added visibility */
+    padding: 20px;
+    border-radius: 10px;
+  }
+
+
+
+
+
+
+
+  /* In ca.css */
+@media screen and (max-width: 768px) {
+    .hero-title {
+      font-size: 20px !important; /* Reduce font size on smaller screens */
+    }
+    .hero-description {
+      font-size: 14px;
+      width: 90%; /* Adjust width to avoid overflow */
+    }
+    .hero-button {
+      width: 150px; /* Adjust button size */
+    }
+  }
+  
