@@ -53,40 +53,40 @@ const Footer = () => {
             href="#"
             className="text-white hover:text-blue-500 transition-transform transform hover:scale-110"
           >
-            <FacebookOutlined 
-              style={{ fontSize: "20px" }} 
-              onPointerEnterCapture={() => {}} 
-              onPointerLeaveCapture={() => {}}
+            <FacebookOutlined
+              style={{ fontSize: "20px" }}
+              onMouseEnter={() => {}}
+              onMouseLeave={() => {}}
             />
           </Link>
           <Link
             href="#"
             className="text-white hover:text-pink-500 transition-transform transform hover:scale-110"
           >
-            <InstagramOutlined 
+            <InstagramOutlined
               style={{ fontSize: "20px" }}
-              onPointerEnterCapture={() => {}} 
-              onPointerLeaveCapture={() => {}}
+              onMouseEnter={() => {}}
+              onMouseLeave={() => {}}
             />
           </Link>
           <Link
             href="#"
             className="text-white hover:text-blue-400 transition-transform transform hover:scale-110"
           >
-            <TwitterOutlined 
+            <TwitterOutlined
               style={{ fontSize: "20px" }}
-              onPointerEnterCapture={() => {}} 
-              onPointerLeaveCapture={() => {}}
+              onMouseEnter={() => {}}
+              onMouseLeave={() => {}}
             />
           </Link>
           <Link
             href="#"
             className="text-white hover:text-blue-700 transition-transform transform hover:scale-110"
           >
-            <LinkedinOutlined 
+            <LinkedinOutlined
               style={{ fontSize: "20px" }}
-              onPointerEnterCapture={() => {}} 
-              onPointerLeaveCapture={() => {}}
+              onMouseEnter={() => {}}
+              onMouseLeave={() => {}}
             />
           </Link>
         </motion.div>

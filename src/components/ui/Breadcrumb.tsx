@@ -1,6 +1,5 @@
 import { Breadcrumb } from "antd";
 import Link from "next/link";
-
 import { HomeOutlined } from "@ant-design/icons";
 
 const SMBreadcrumb = ({
@@ -17,7 +16,10 @@ const SMBreadcrumb = ({
     {
       title: (
         <Link style={{ ...style }} href="/">
-          <HomeOutlined />
+          <HomeOutlined
+            onMouseEnter={() => {}}
+            onMouseLeave={() => {}}
+          />
         </Link>
       ),
     },
@@ -28,7 +30,7 @@ const SMBreadcrumb = ({
             {item.label}
           </Link>
         ) : (
-          <samp style={{ ...style }}>{item.label}</samp>
+          <span style={{ ...style }}>{item.label}</span>
         ),
       };
     }),

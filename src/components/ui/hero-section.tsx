@@ -123,6 +123,7 @@ const HeroSection = () => {
                       color: "white",
                       fontWeight: "bold",
                       fontSize: "16px",
+                      marginTop:"12px",
                       borderRadius: "25px",
                       transition: "all 0.3s ease",
                     }}

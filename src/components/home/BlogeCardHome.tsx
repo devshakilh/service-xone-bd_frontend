@@ -45,8 +45,6 @@ const BlogeCardHome = () => {
                     color: "green",
                     marginRight: "10px",
                   }}
-                  onPointerEnterCapture={() => {}} 
-                  onPointerLeaveCapture={() => {}}
                 />
                 {new Date(blog?.createdAt).toLocaleDateString("en-US", {
                   weekday: "long",
@@ -60,13 +58,6 @@ const BlogeCardHome = () => {
                 title={blog?.title}
                 description={blog?.content.slice(0, 240)}
               />
-              {/* <p
-              style={{
-                padding: "10px 0",
-                fontSize: "17px",
-              }}
-              dangerouslySetInnerHTML={{ __html: blog?.content }}
-            /> */}
             </Card>
           </Col>
         ))}

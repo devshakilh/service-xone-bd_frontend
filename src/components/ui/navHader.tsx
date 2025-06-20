@@ -23,6 +23,7 @@ const Navbar = () => {
   const router = useRouter();
   const { data, isLoading, refetch } = useProfileQuery({});
   const userProfile = data?.data;
+
   const logOut = () => {
     removeUserInfo(authKey);
     message.success("Logout Successfully");
@@ -30,17 +31,16 @@ const Navbar = () => {
     router.push("/");
   };
 
-  if (isLoading) <Loading />;
+  if (isLoading) return <Loading />;
 
   const items: MenuProps["items"] = [
     {
       key: "0",
       label: role ? (
         <>
-          <Link style={{ padding: "0 50px" }} href={"/profile"}>
+          <Link style={{ padding: "0 50px" }} href="/profile">
             <Button type="text">
-              {" "}
-              <UserOutlined onPointerEnterCapture={() => {}} onPointerLeaveCapture={() => {}} /> Profile
+              <UserOutlined onMouseEnter={() => {}} onMouseLeave={() => {}} /> Profile
             </Button>
           </Link>
         </>
@@ -50,42 +50,26 @@ const Navbar = () => {
       key: "1",
       label: role ? (
         <>
-          <Link style={{ padding: "0 50px" }} href={"/booking"}>
+          <Link style={{ padding: "0 50px" }} href="/booking">
             <Button type="text">
-              {" "}
-              <DashboardOutlined onPointerEnterCapture={() => {}} onPointerLeaveCapture={() => {}} /> Booking List
+              <DashboardOutlined onMouseEnter={() => {}} onMouseLeave={() => {}} /> Booking List
             </Button>
           </Link>
         </>
       ) : null,
     },
-    // {
-    //   key: "2",
-    //   label: role ? (
-    //     <>
-    //       <Link style={{ padding: "0 50px" }} href={"https://service-zone-bd-dashboard-bez72kqpq-shakilla1.vercel.app"}>
-    //         <Button type="text">
-    //           {" "}
-    //           <RadarChartOutlined /> Dashboard
-    //         </Button>
-    //       </Link>
-    //     </>
-    //   ) : null,
-    // },
     {
       key: "2",
       label: role ? (
-        <Link style={{ padding: "0 50px" }} onClick={logOut} href={""}>
+        <Link style={{ padding: "0 50px" }} onClick={logOut} href="">
           <Button type="text">
-            {" "}
-            <LogoutOutlined onPointerEnterCapture={() => {}} onPointerLeaveCapture={() => {}} /> Logout
+            <LogoutOutlined onMouseEnter={() => {}} onMouseLeave={() => {}} /> Logout
           </Button>
         </Link>
       ) : (
-        <Link style={{ padding: "0 50px" }} href={"/login"}>
+        <Link style={{ padding: "0 50px" }} href="/login">
           <Button type="text">
-            {" "}
-            <LoginOutlined onPointerEnterCapture={() => {}} onPointerLeaveCapture={() => {}} /> Login
+            <LoginOutlined onMouseEnter={() => {}} onMouseLeave={() => {}} /> Login
           </Button>
         </Link>
       ),
@@ -93,39 +77,33 @@ const Navbar = () => {
   ];
 
   return (
-    <header className="custom-header "
-    style={{
-      background: "#007bff"
-     
-    }}
+    <header
+      className="custom-header"
+      style={{
+        background: "#007bff",
+      }}
     >
       <Container>
         <div className="header">
           <div>
-            <Link className="title-font" href="/"
-            style={{
-              color:"white",
-              textDecoration: "none",
-            }}
+            <Link
+              className="title-font"
+              href="/"
+              style={{
+                color: "white",
+                textDecoration: "none",
+              }}
             >
-              {/* <Image
-                alt="logo"
-                src="https://res.cloudinary.com/dhvuyehnq/image/upload/v1697697658/okxkydvlk1hgqxovykgq.png"
-                width={140}
-                height={55}
-              /> */}
-              SERVICE 
-              <br />
-              ZONE BD
+              SERVICE <br /> ZONE BD
             </Link>
           </div>
-          <nav className="nav-links ">
+          <nav className="nav-links">
             {naveItems.map((item, index) => (
               <Link
                 style={{
                   textTransform: "uppercase",
                   fontSize: "17px",
-                  color:"white"
+                  color: "white",
                 }}
                 key={index}
                 href={item?.path}
@@ -156,7 +134,7 @@ const Navbar = () => {
                 <Space wrap size={16}>
                   <Avatar
                     size="large"
-                    icon={<UserOutlined onPointerEnterCapture={() => {}} onPointerLeaveCapture={() => {}} />}
+                    icon={<UserOutlined onMouseEnter={() => {}} onMouseLeave={() => {}} />}
                     src={userProfile?.profileImg}
                   />
                 </Space>

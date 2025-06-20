@@ -7,7 +7,7 @@ type UMDatePikerProps = {
   name: string;
   label?: string;
   value?: Dayjs;
-  setNewDates: (value: any) => void;
+  setNewDates: (value: Dayjs | null) => void;
 };
 
 const FormDatePicker = ({
@@ -19,25 +19,26 @@ const FormDatePicker = ({
   const { control, setValue } = useFormContext();
 
   const handleOnChange: DatePickerProps["onChange"] = (date, dateString) => {
-    onChange ? onChange(date, dateString) : null;
+    if (typeof dateString === "string") {
+      onChange?.(date, dateString);
+    }
     setValue(name, date);
     setNewDates(date);
   };
 
   return (
     <div>
-      {label ? label : null}
+      {label && <label>{label}</label>}
       <br />
       <Controller
         name={name}
         control={control}
         render={({ field }) => (
           <DatePicker
-            defaultValue={dayjs(field.value) || Date.now()}
-            size={"large"}
+            defaultValue={field.value ? dayjs(field.value) : dayjs()}
+            size="large"
             onChange={handleOnChange}
-            className='lg:w-100%'
-            // style={{ width: "100%" }}
+            className="lg:w-100%"
           />
         )}
       />

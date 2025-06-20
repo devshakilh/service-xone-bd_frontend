@@ -4,14 +4,19 @@ import { useServicesQuery } from "@/redux/api/serviceApi";
 import { Rate } from "antd";
 import Image from "next/image";
 import BookingSchudle from "./BookingSchudle";
+import BookingRequestLoading from "./skeleton/booking-request-loading.skeleton";
 
 const Booking = ({ id }: { id: string }) => {
-  const { data } = useServicesQuery(id);
-
+  const { data, isLoading } = useServicesQuery(id);
   const service = data?.data;
 
+
+  if (isLoading || !service) {
+    return <BookingRequestLoading />;
+  }
+
   return (
-    <div>
+    <div >
       {/* Booking Information */}
 
       <div
@@ -152,3 +157,5 @@ const Booking = ({ id }: { id: string }) => {
 };
 
 export default Booking;
+
+

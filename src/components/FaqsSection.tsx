@@ -35,11 +35,7 @@ const FaqsSection = () => {
         bordered={false}
         defaultActiveKey={["1"]}
         expandIcon={({ isActive }) => (
-          <CaretRightOutlined 
-            rotate={isActive ? 90 : 0}
-            onPointerEnterCapture={() => {}} 
-            onPointerLeaveCapture={() => {}}
-          />
+          <CaretRightOutlined rotate={isActive ? 90 : 0} />
         )}
         style={{ background: token.colorBgContainer }}
         items={getItems(panelStyle)}

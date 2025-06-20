@@ -10,7 +10,6 @@ import {
   message,
 } from "antd";
 import { SubmitHandler } from "react-hook-form";
-
 import Form from "@/components/forms/form";
 import { ratingOptions } from "@/constants/golobal";
 import { useCreateReviewMutation, useReviewQuery } from "@/redux/api/reviewApi";
@@ -26,11 +25,9 @@ type FormValues = {
 
 const CustomerReview = ({ service }: any) => {
   const [createReview] = useCreateReviewMutation();
-
   const { data, refetch } = useReviewQuery(service?.id);
-
   const review = data?.data;
- 
+
   const onSubmit: SubmitHandler<FormValues> = async (data: any) => {
     try {
       const res = await createReview({
@@ -53,24 +50,25 @@ const CustomerReview = ({ service }: any) => {
     <div>
       <Row
         gutter={24}
+        className="bg-gray-100"
         style={{
           display: "flex",
-          backgroundColor: "#317f8c",
-          justifyContent: "centers",
+          justifyContent: "center",
           alignItems: "center",
-          padding: "0 50px ",
+          padding: "0 50px",
           flexDirection: "row",
           borderRadius: "10px",
-
           height: "200px",
         }}
       >
         <Col span={12}>
-          <Statistic title="Feedback" value={1128} prefix={<LikeOutlined />} />
+          <Statistic
+            title="Feedback"
+            value={1128}
+            prefix={<LikeOutlined onMouseEnter={() => {}} onMouseLeave={() => {}} />}
+          />
         </Col>
         <Col span={12}>
-          {/* <Statistic title="Unmerged" value={93} suffix="/ 100" /> */}
-          {/* <Progress percent={50} steps={25} /> */}
           <Progress percent={50} status="active" />
           <Progress percent={30} status="active" />
           <Progress percent={20} status="active" />
@@ -81,7 +79,7 @@ const CustomerReview = ({ service }: any) => {
           gutter={24}
           style={{
             backgroundColor: "#f5f5f6",
-            padding: " 10px",
+            padding: "10px",
             marginTop: "1rem",
             borderRadius: "10px",
           }}
@@ -90,7 +88,7 @@ const CustomerReview = ({ service }: any) => {
             <FormSelectField
               name="rating"
               options={ratingOptions}
-              placeholder="Seclit rating"
+              placeholder="Select rating"
             />
           </Col>
         </Row>
@@ -98,7 +96,7 @@ const CustomerReview = ({ service }: any) => {
           gutter={24}
           style={{
             backgroundColor: "#f5f5f6",
-            padding: " 10px",
+            padding: "10px",
             marginTop: "1rem",
             borderRadius: "10px",
           }}
@@ -107,7 +105,7 @@ const CustomerReview = ({ service }: any) => {
             <FormTextArea
               style={{ height: 150, marginBottom: 24 }}
               name="review"
-              placeholder="Seclit rating"
+              placeholder="Write your review"
             />
           </Col>
         </Row>

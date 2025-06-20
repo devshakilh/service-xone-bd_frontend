@@ -1,15 +1,14 @@
+"use client";
+
 import Booking from "@/components/BookingRequst";
 import SMBreadcrumb from "@/components/ui/Breadcrumb";
 import Container from "@/components/ui/container";
-import { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Service | Booking",
-};
+
 
 const BookingRequst = ({ params }: any) => {
   const id = params?.id;
-
+  
   return (
     <div>
       <Container>

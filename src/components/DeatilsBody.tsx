@@ -11,7 +11,6 @@ import { motion } from "framer-motion"; // Import Framer Motion
 import CustomerReview from "./ui/CustomerReview";
 import RelatedServices from "./ui/RelatedServices";
 
-
 const SkeletonLoader = () => {
   return (
     <motion.div 
@@ -27,15 +26,57 @@ const SkeletonLoader = () => {
             className="flex flex-col md:flex-row items-center gap-6 p-4 md:p-8 bg-gray-100 rounded-lg"
             variants={fadeIn}
           >
-            <div className="w-full md:w-1/2">
-              <Skeleton.Image active className="rounded-lg" />
+           <div
+          style={{
+            display: "flex",
+            gap: "1rem",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "1rem",
+            height: "450px",
+          }}
+        >
+          {/* Skeleton Image */}
+          <div
+            style={{
+              flex: "1 1 40%",
+              borderRadius: "10px",
+              overflow: "hidden",
+              height: "100%",
+              maxWidth: "400px",
+            }}
+          >
+            <Skeleton.Image style={{ width: "400px", height: "400px" }} />
+          </div>
+
+          {/* Skeleton Details */}
+          <div
+            style={{
+              flex: "1 1 50%",
+              display: "flex",
+              flexDirection: "column",
+              gap: "1rem",
+              padding: "1rem",
+              height: "15rem",
+            }}
+          >
+            <Skeleton.Button active style={{ width: "150px", height: "30px" }} />
+            <Skeleton.Input active style={{ width: "60%", height: "50px" }} />
+            <Skeleton.Button active style={{ width: "100px", height: "30px" }} />
+            <Skeleton.Input active style={{ width: "90%", height: "20px" }} />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                gap: "1rem",
+              }}
+            >
+              <Skeleton.Button active style={{ width: "30%", height: "30px" }} />
+              <Skeleton.Button active style={{ width: "30%", height: "30px" }} />
             </div>
-            <div className="w-full md:w-1/2 space-y-4">
-              <Skeleton.Input active className="w-40" />
-              <Skeleton.Input active className="w-80" />
-              <Skeleton.Input active className="w-60" />
-              <Skeleton.Input active className="w-20" />
-            </div>
+            <Skeleton.Input active style={{ width: "100%", height: "50px" }} />
+          </div>
+        </div>
           </motion.div>
         </Col>
       </Row>
@@ -78,9 +119,6 @@ const SkeletonLoader = () => {
   );
 };
 
-
-
-
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
@@ -112,10 +150,10 @@ const DetailsBody = ({ service }: any) => {
     return <SkeletonLoader />;
   }
 
-
   const price = parseInt(service?.price || 0);
   const tax = parseInt(service?.tax || 0);
   const totalPrice = price + (price * tax) / 100;
+
   return (
     <motion.div 
       className="p-4 md:p-8"
@@ -133,7 +171,7 @@ const DetailsBody = ({ service }: any) => {
             <div className="w-full md:w-1/2">
               <Image
                 className="rounded-lg"
-                src={service?.imageLink}
+                src={service?.imageLink || "/default-placeholder.png"} // Fallback if imageLink is invalid
                 width={600}
                 height={400}
                 alt="Service Image"
@@ -156,10 +194,7 @@ const DetailsBody = ({ service }: any) => {
                 className="text-lg text-gray-700 flex items-center gap-2"
                 variants={fadeIn}
               >
-                <HomeOutlined 
-                  onPointerEnterCapture={() => {}} 
-                  onPointerLeaveCapture={() => {}}
-                /> Service Point: {service?.location}
+                <HomeOutlined /> Service Point: {service?.location}
               </motion.p>
               <motion.div 
                 className="flex items-center gap-2"
@@ -214,11 +249,7 @@ const DetailsBody = ({ service }: any) => {
                 onClick={() => handleBook(service)}
               >
                 Book Now
-                <IdcardOutlined 
-                  className="ml-2"
-                  onPointerEnterCapture={() => {}} 
-                  onPointerLeaveCapture={() => {}}
-                />
+                <IdcardOutlined className="ml-2" />
               </Button>
             </Link>
             <Button

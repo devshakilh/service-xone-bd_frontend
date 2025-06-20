@@ -1,5 +1,4 @@
-
-"use client"
+"use client";
 import {
   FieldTimeOutlined,
   FileDoneOutlined,
@@ -58,38 +57,22 @@ const Overview = () => {
       >
         {[
           {
-            icon: <FileDoneOutlined 
-              style={{ color: "#28a745" }} 
-              onPointerEnterCapture={() => {}} 
-              onPointerLeaveCapture={() => {}}
-            />,
+            icon: <FileDoneOutlined style={{ color: "#28a745" }} />,
             title: "Services Done",
             value: "1000+",
           },
           {
-            icon: <UsergroupAddOutlined 
-              style={{ color: "#007bff" }}
-              onPointerEnterCapture={() => {}} 
-              onPointerLeaveCapture={() => {}}
-            />,
+            icon: <UsergroupAddOutlined style={{ color: "#007bff" }} />,
             title: "Active Users",
             value: "1M",
           },
           {
-            icon: <SolutionOutlined 
-              style={{ color: "#ffc107" }}
-              onPointerEnterCapture={() => {}} 
-              onPointerLeaveCapture={() => {}}
-            />,
+            icon: <SolutionOutlined style={{ color: "#ffc107" }} />,
             title: "Professional Experts",
             value: "200+",
           },
           {
-            icon: <FieldTimeOutlined 
-              style={{ color: "#17a2b8" }}
-              onPointerEnterCapture={() => {}} 
-              onPointerLeaveCapture={() => {}}
-            />,
+            icon: <FieldTimeOutlined style={{ color: "#17a2b8" }} />,
             title: "Online Support",
             value: "24 Hours",
           },
@@ -99,7 +82,7 @@ const Overview = () => {
             sm={12}
             md={6}
             key={index}
-            style={{ textAlign: "center", justifyContent:"cente" }}
+            style={{ textAlign: "center", justifyContent: "center" }}
           >
             <motion.div
               whileHover={{ scale: 1.05 }}
@@ -113,9 +96,9 @@ const Overview = () => {
                   border: "1px solid #ddd",
                   display: "flex",
                   justifyContent: "center",
-                  marginLeft:"17vh",
+                  marginLeft: "17vh",
                   alignItems: "center",
-                  textAlign:"center",
+                  textAlign: "center",
                 }}
                 icon={item.icon}
               />

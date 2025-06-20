@@ -1,3 +1,5 @@
+"use client";
+
 import { authKey } from "@/constants/storageKey";
 import { getUserInfo, removeUserInfo } from "@/services/auth.service";
 import { UserOutlined } from "@ant-design/icons";
@@ -47,7 +49,15 @@ const Header = () => {
         <Dropdown menu={{ items }}>
           <a>
             <Space wrap size={16}>
-              <Avatar size="large" icon={<UserOutlined />} />
+              <Avatar
+                size="large"
+                icon={
+                  <UserOutlined
+                    onMouseEnter={() => {}}
+                    onMouseLeave={() => {}}
+                  />
+                }
+              />
             </Space>
           </a>
         </Dropdown>

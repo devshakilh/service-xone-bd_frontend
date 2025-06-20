@@ -20,6 +20,7 @@ import {
   PaginationProps,
   Rate,
   Row,
+  Skeleton,
 } from "antd";
 import Meta from "antd/es/card/Meta";
 import { useRouter } from "next/navigation";
@@ -30,7 +31,6 @@ import Subscribe from "./ui/Subscribe";
 
 const ServicesItem = () => {
   const router = useRouter();
-
   const query: Record<string, any> = {};
 
   const [sige, setSige] = useState<number>(12);
@@ -53,17 +53,15 @@ const ServicesItem = () => {
     delay: 600,
   });
 
-  if (!!debouncedTerm) {
+  if (debouncedTerm) {
     query["search"] = debouncedTerm;
   }
 
   const { data, isLoading, refetch } = useServicessQuery({ ...query });
-
   const services = data?.services;
-
   const meta = data?.meta;
 
-  const handelBook = (value: any) => {
+  const handleBook = (value: any) => {
     router.push(`/booking-requst/${value?.id}`);
   };
 
@@ -79,10 +77,9 @@ const ServicesItem = () => {
 
   const onTableChange = (order: string) => {
     setSortBy("price");
-    // setSortOrder("desc");
-
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
+
   const resetFilter = () => {
     setSortBy("");
     setSortOrder("");
@@ -91,10 +88,22 @@ const ServicesItem = () => {
   };
 
   if (isLoading) {
-    return <Loading />;
+    return (
+      <Row gutter={[20, 0]}>
+        {Array.from({ length: 8 }).map((_, index) => (
+          <Col span={6} key={index}>
+            <Card style={{ width: 300, marginTop: "8px" }}>
+              <Skeleton.Image style={{ width: 300, height: 200 }} active />
+              <Skeleton active paragraph={{ rows: 3 }} />
+            </Card>
+          </Col>
+        ))}
+      </Row>
+    );
   }
+
   return (
-    <>
+    <div>
       <div
         style={{
           width: "100%",
@@ -107,6 +116,7 @@ const ServicesItem = () => {
           justifyContent: "center",
           alignItems: "center",
           position: "relative",
+          overflow: "hidden",
         }}
       >
         <h1
@@ -114,6 +124,7 @@ const ServicesItem = () => {
             color: "#fff",
             fontSize: "50px",
             fontWeight: "bold",
+            animation: "fadeIn 1s",
           }}
         >
           {categoryId?.label || "All Services"}
@@ -140,200 +151,76 @@ const ServicesItem = () => {
             width: "70%",
             height: "110px",
             backgroundColor: "#fff",
-            boxShadow: "10px 10px 10px 10px #0000001a",
+            boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
             borderRadius: "10px",
             position: "absolute",
             top: "70%",
+            padding: "10px 20px",
           }}
         >
-          <div>
-            <p
-              style={{
-                marginLeft: "25px",
-                marginBottom: "5px",
-              }}
-            >
-              Search
-            </p>
-            <Input
-              type="text"
-              size="large"
-              placeholder="Search ..."
-              value={searchTerm}
-              style={{
-                width: "300px",
-                height: "50px",
-                marginLeft: "20px",
-                marginBottom: "20px",
-              }}
-              onChange={(e) => {
-                setSearchTerm(e.target.value);
-              }}
-            />
-          </div>
-
-          <div>
-            <p
-              style={{
-                marginLeft: "10px",
-                marginBottom: "5px",
-              }}
-            >
-              Category
-            </p>
-            <ServiceCategoreField
-              style={{ marginBottom: "20px" }}
-              setCategoryId={setCategoryId}
-              categoryId={categoryId}
-            />
-          </div>
-
-          {/* <div> */}
-          <Button
-            style={{
-              height: "48px",
+          <Input
+            type="text"
+            size="large"
+            placeholder="Search ..."
+            value={searchTerm}
+            style={{ width: "300px" }}
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
             }}
-            onClick={() => onTableChange("ascend")}
-          >
+          />
+          <ServiceCategoreField
+            setCategoryId={setCategoryId}
+            categoryId={categoryId}
+          />
+          <Button onClick={() => onTableChange("ascend")}>
             <RiseOutlined />
           </Button>
-          {/* </div> */}
-          <Button
-            style={{
-              height: "48px",
-            }}
-            onClick={() => onTableChange("desc")}
-          >
+          <Button onClick={() => onTableChange("desc")}>
             <FallOutlined />
           </Button>
-
           {(!!sortBy || !!sortOrder || searchTerm || categoryId) && (
-            <Button
-              // type="primary"
-              onClick={resetFilter}
-              style={{
-                // margin: "0 10px",
-                // padding: "20px",
-
-                height: "48px",
-              }}
-            >
+            <Button onClick={resetFilter}>
               <ReloadOutlined />
             </Button>
           )}
         </div>
       </div>
 
-      <Row
-        gutter={[20, 20]}
-        style={{
-          marginTop: "70px",
-          padding: "20px 0",
-        }}
-      >
+      <Row gutter={[20, 20]} style={{ marginTop: "70px", padding: "20px 0" }}>
         {services?.length > 0 ? (
-          services?.map((service: any, i: any) => {
-            return (
-              <Col span={6} order={i} key={i}>
-                <Card
-                  hoverable
-                  style={{ width: 300, marginTop: "17px" }}
-                  cover={
-                    <Avatar
-                      shape="square"
-                      size={300}
-                      src={service?.imageLink}
-                    />
-                  }
-                >
-                  <div
-                    onClick={() =>
-                      router.push(`/services/details/${service?.id}`)
-                    }
-                  >
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                      }}
-                    >
-                      <p
-                        style={{
-                          fontSize: "28px",
-                          fontWeight: "bold",
-                          color: "black",
-                        }}
-                      >
-                        {service?.price} ৳
-                      </p>
-
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "5px",
-                        }}
-                      >
-                        <p
-                          style={{
-                            fontSize: "16px",
-                          }}
-                        >
-                          2.5
-                        </p>
-                        <Rate
-                          style={{
-                            fontSize: "14px",
-                          }}
-                          allowHalf
-                          defaultValue={2.5}
-                        />
-                      </div>
+          services.map((service: any, i: any) => (
+            <Col span={6} key={i}>
+              <Card
+                hoverable
+                style={{ width: 300, marginTop: "17px", transition: "transform 0.3s" }}
+                onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.05)"}
+                onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
+                cover={<Avatar shape="square" size={300} src={service?.imageLink} />}
+              >
+                <div onClick={() => router.push(`/services/details/${service?.id}`)}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <p style={{ fontSize: "25px", fontWeight: "bold" }}>{service?.price} ৳</p>
+                    <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                      <p style={{ fontSize: "16px" }}>2.5</p>
+                      <Rate style={{ fontSize: "14px" }} allowHalf defaultValue={2.5} />
                     </div>
-                    <p>{service?.location}</p>
-
-                    <Meta
-                      style={{
-                        marginTop: "10px",
-                        // color:"#1ab9d4"
-                      }}
-                      title={
-                        <p
-                          style={{
-                            fontSize: "20px",
-                            fontWeight: "bold",
-                            color: "#007bff",
-                          }}
-                        >
-                          {service?.title}
-                        </p>
-                      }
-                      description={service?.description.slice(0, 70) + "..."}
-                    />
                   </div>
-                  <Button
-                    style={{
-                      marginTop: "10px",
-                      width: "100%",
-                      height: "40px",
-                      backgroundColor: "#007bff",
-                      color: "#fff",
-                    }}
-                    onClick={() => handelBook(service)}
-                  >
-                    Book Now
-                    <IdcardOutlined
-                      style={{
-                        marginLeft: "5px",
-                      }}
-                    />
-                  </Button>
-                </Card>
-              </Col>
-            );
-          })
+                  <p>{service?.location}</p>
+                  <Meta
+                    title={<p style={{ fontSize: "20px", fontWeight: "bold", color: "#007bff" }}>{service?.title}</p>}
+                    description={service?.description.slice(0, 70) + "..."}
+                  />
+                </div>
+                <Button
+                  style={{ marginTop: "10px", width: "100%", height: "40px", backgroundColor: "#007bff", color: "#fff" }}
+                  onClick={() => handleBook(service)}
+                >
+                  Book Now
+                  <IdcardOutlined style={{ marginLeft: "5px" }} />
+                </Button>
+              </Card>
+            </Col>
+          ))
         ) : (
           <Empty
             style={{
@@ -365,7 +252,7 @@ const ServicesItem = () => {
       </Row>
 
       <Subscribe />
-    </>
+    </div>
   );
 };
 

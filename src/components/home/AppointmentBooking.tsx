@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { DotChartOutlined } from "@ant-design/icons";
 import { Avatar, Col, Row } from "antd";
@@ -94,7 +94,7 @@ const AppointmentBooking = () => {
                   >
                     <Avatar
                       size={60}
-                      icon={<DotChartOutlined onPointerEnterCapture={() => {}} onPointerLeaveCapture={() => {}} />}
+                      icon={<DotChartOutlined />}
                       style={{ backgroundColor: "#007bff", marginBottom: "10px" }}
                     />
                     <h2

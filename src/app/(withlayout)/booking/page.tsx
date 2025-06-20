@@ -1,59 +1,49 @@
+"use client"
 import BookingList from "@/components/BookingList";
 import SMBreadcrumb from "@/components/ui/Breadcrumb";
 import Container from "@/components/ui/container";
 import { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Your Booking",
-};
 
-const Booking = () => {
+
+export default function Booking() {
   return (
-    <div>
-      <Container>
-        {/* bredcone and baner */}
-        <div
+    <Container>
+      <div
+        style={{
+          width: "100%",
+          height: "200px",
+          backgroundColor: "#317f8c",
+          margin: "20px 0",
+          borderRadius: "15px",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          position: "relative",
+        }}
+      >
+        <h1
           style={{
-            width: "100%",
-            height: "200px",
-            backgroundColor: "#317f8c",
-            margin: "20px 0",
-            borderRadius: "15px",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            position: "relative",
+            color: "#fff",
+            fontSize: "50px",
+            fontWeight: "bold",
           }}
         >
-          <h1
-            style={{
-              color: "#fff",
-              fontSize: "50px",
-              fontWeight: "bold",
-            }}
-          >
-            Booking List
-          </h1>
-          <br />
-          <div>
-            <SMBreadcrumb
-              items={[
-                { label: "Home", path: "/" },
-                { label: "Booking", path: "/booking" },
-              ]}
-              style={{
-                color: "#fff",
-                fontSize: "17px",
-              }}
-            />
-          </div>
-        </div>
-
-        <BookingList />
-      </Container>
-    </div>
+          Booking List
+        </h1>
+        <SMBreadcrumb
+          items={[
+            { label: "Home", path: "/" },
+            { label: "Booking", path: "/booking" },
+          ]}
+          style={{
+            color: "#fff",
+            fontSize: "17px",
+          }}
+        />
+      </div>
+      <BookingList />
+    </Container>
   );
-};
-
-export default Booking;
+}

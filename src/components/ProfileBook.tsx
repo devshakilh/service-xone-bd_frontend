@@ -12,7 +12,6 @@ import {
 } from "@ant-design/icons";
 import { Avatar, Badge, Card, Col, Row } from "antd";
 import Meta from "antd/es/card/Meta";
-// import EditProfile from "./edit/updateProfile";
 
 const ProfileBook = () => {
   const { data, isLoading } = useProfileQuery({});
@@ -57,7 +56,6 @@ const ProfileBook = () => {
                     }}
                     src={data?.data?.profileImg}
                   />
-
                   <h1
                     style={{
                       fontSize: "1.5rem",
@@ -79,7 +77,6 @@ const ProfileBook = () => {
                 <Meta
                   style={{
                     marginBottom: "1rem",
-
                     alignItems: "center",
                   }}
                   title={data?.data?.email}
@@ -104,7 +101,6 @@ const ProfileBook = () => {
               </Card>
             </div>
           </Col>
-
           <Col span={16}>
             <EditProfile />
           </Col>

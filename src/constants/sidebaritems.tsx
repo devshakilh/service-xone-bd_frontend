@@ -12,13 +12,17 @@ export const sidebarItems = (role: string) => {
   const defaultSidebarItems: MenuProps["items"] = [
     {
       label: <Link href={`/dashboard`}>Dashboard</Link>,
-      icon: <TableOutlined />,
+      icon: <TableOutlined 
+     
+      />,
       key: `/dashboard`,
     },
     {
       label: "Profile",
       key: "profile",
-      icon: <ProfileOutlined />,
+      icon: <ProfileOutlined 
+   
+      />,
       children: [
         {
           label: <Link href={`/${role}/profile`}>Profile</Link>,
@@ -35,7 +39,9 @@ export const sidebarItems = (role: string) => {
   const commonAdminSidebarItems: MenuProps["items"] = [
     {
       label: <Link href={`/${role}/manage-admin`}>Manage Admin</Link>,
-      icon: <TableOutlined />,
+      icon: <TableOutlined 
+      
+      />,
       key: `/${role}/manage-admin`,
     },
   ];
@@ -46,7 +52,9 @@ export const sidebarItems = (role: string) => {
     {
       label: "Booking Management",
       key: "booking-management",
-      icon: <TableOutlined />,
+      icon: <TableOutlined 
+  
+      />,
       children: [
         {
           label: <Link href={`/${role}/bookings`}>Bookings</Link>,
@@ -61,7 +69,9 @@ export const sidebarItems = (role: string) => {
     {
       label: "Business Management",
       key: "business-management",
-      icon: <AppstoreOutlined />,
+      icon: <AppstoreOutlined 
+     
+      />,
       children: [
         {
           label: <Link href={`/${role}/feedback`}>Feedback</Link>,
@@ -76,7 +86,9 @@ export const sidebarItems = (role: string) => {
     {
       label: "Service Management",
       key: "service-management",
-      icon: <AppstoreOutlined />,
+      icon: <AppstoreOutlined 
+      
+      />,
       children: [
         {
           label: <Link href={`/${role}/categories`}>Categories</Link>,
@@ -91,7 +103,9 @@ export const sidebarItems = (role: string) => {
     {
       label: "Website Settings",
       key: "website-settings",
-      icon: <AppstoreOutlined />,
+      icon: <AppstoreOutlined 
+     
+      />,
       children: [
         {
           label: <Link href={`/${role}/blogs`}>Blogs</Link>,
@@ -106,7 +120,9 @@ export const sidebarItems = (role: string) => {
     {
       label: "Users & Role Management",
       key: "users-role-management",
-      icon: <AppstoreOutlined />,
+      icon: <AppstoreOutlined 
+    
+      />,
       children: [
         {
           label: <Link href={`/${role}/roles`}>Roles</Link>,
@@ -124,18 +140,23 @@ export const sidebarItems = (role: string) => {
     ...defaultSidebarItems,
     {
       label: <Link href={`/${role}/admin`}>Manage Admin</Link>,
-      icon: <TableOutlined />,
+      icon: <TableOutlined    
+      />,
       key: `/${role}/admin`,
     },
     {
       label: <Link href={`/${role}/user`}>Manage User</Link>,
-      icon: <TableOutlined />,
+      icon: <TableOutlined 
+    
+      />,
       key: `/${role}/user`,
     },
     {
       label: "Manage permission",
       key: "manage-permission",
-      icon: <AppstoreOutlined />,
+      icon: <AppstoreOutlined 
+     
+      />,
       children: [
         {
           label: <Link href={`/${role}/permission`}>View permissions</Link>,

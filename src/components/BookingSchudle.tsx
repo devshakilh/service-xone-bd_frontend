@@ -61,8 +61,8 @@ const BookingSchudle = ({ service }: { service: any }) => {
   };
 
   return (
-    <div>
-      <h1>BookingSchudle</h1>
+    <div className="mb-12">
+      <h1 className="mb-6">BookingSchudle</h1>
       <StepperForm
         persistKey="booking-schudle"
         submitHandler={(value) => {

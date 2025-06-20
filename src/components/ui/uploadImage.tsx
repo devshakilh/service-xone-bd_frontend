@@ -1,3 +1,5 @@
+"use client";
+
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { Upload, message } from "antd";
 import type { UploadChangeParam } from "antd/es/upload";
@@ -41,7 +43,6 @@ const UploadImage = ({ name }: ImageUploadProps) => {
       return;
     }
     if (info.file.status === "done") {
-      // Get this url from response in real world.
       setValue(name, info.file.originFileObj);
       getBase64(info.file.originFileObj as RcFile, (url) => {
         setLoading(false);
@@ -58,29 +59,27 @@ const UploadImage = ({ name }: ImageUploadProps) => {
   );
 
   return (
-    <>
-      <Upload
-        name={name}
-        listType="picture-card"
-        className="avatar-uploader"
-        showUploadList={false}
-        action="/api/file"
-        beforeUpload={beforeUpload}
-        onChange={handleChange}
-      >
-        {imageUrl ? (
-          <Image
-            src={imageUrl}
-            alt="avatar"
-            style={{ width: "100%" }}
-            width={100}
-            height={100}
-          />
-        ) : (
-          uploadButton
-        )}
-      </Upload>
-    </>
+    <Upload
+      name={name}
+      listType="picture-card"
+      className="avatar-uploader"
+      showUploadList={false}
+      action="/api/file"
+      beforeUpload={beforeUpload}
+      onChange={handleChange}
+    >
+      {imageUrl ? (
+        <Image
+          src={imageUrl}
+          alt="avatar"
+          style={{ width: "100%" }}
+          width={100}
+          height={100}
+        />
+      ) : (
+        uploadButton
+      )}
+    </Upload>
   );
 };
 

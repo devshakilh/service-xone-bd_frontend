@@ -24,51 +24,63 @@ const SeeAllCategory = () => {
       >
         {/* Heading Section */}
         <div
+      style={{
+        padding: "30px 0",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        flexWrap: "wrap",
+      }}
+    >
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        viewport={{ once: true }}
+      >
+        <h1
           style={{
-            padding: "30px 0",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexWrap: "wrap",
+            fontSize: "40px",
+            color: "#007bff",
+            textAlign: "left",
           }}
         >
-          <div>
-            <h1
-              style={{
-                fontSize: "40px",
-                color: "#007bff",
-                textAlign: "left",
-              }}
-            >
-              See All Categories
-            </h1>
-            <p
-              style={{
-                marginTop: "10px",
-                fontSize: "18px",
-                color: "#808080",
-                textAlign: "left",
-              }}
-            >
-              Explore our most popular categories
-            </p>
-          </div>
-          <Link href="/categories">
-            <Button
-              type="primary"
-              style={{
-                backgroundColor: "#FF8C00",
-                color: "#fff",
-                borderRadius: "5px",
-                width: "120px",
-                height: "40px",
-                fontWeight: "bold",
-              }}
-            >
-              See All
-            </Button>
-          </Link>
-        </div>
+          See All Categories
+        </h1>
+        <p
+          style={{
+            marginTop: "10px",
+            fontSize: "18px",
+            color: "#808080",
+            textAlign: "left",
+          }}
+        >
+          Explore our most popular categories
+        </p>
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0, x: 50 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5 }}
+        viewport={{ once: true }}
+      >
+        <Link href="/categories">
+          <Button
+            type="primary"
+            style={{
+              backgroundColor: "#FF8C00",
+              color: "#fff",
+              borderRadius: "5px",
+              width: "120px",
+              height: "40px",
+              fontWeight: "bold",
+            }}
+          >
+            See All
+          </Button>
+        </Link>
+      </motion.div>
+    </div>
 
         {/* Skeleton Loading Grid */}
         <div>
@@ -108,15 +120,7 @@ const SeeAllCategory = () => {
                         backgroundColor: "#e0e0e0",
                       }}
                     />
-                    <Skeleton.Input
-                      active
-                      style={{
-                        width: "60%",
-                        margin: "0 auto",
-                        height: "15px",
-                        backgroundColor: "#e0e0e0",
-                      }}
-                    />
+                    
                   </Card>
                 </motion.div>
               </Col>
