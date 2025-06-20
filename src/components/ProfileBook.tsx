@@ -17,7 +17,7 @@ const ProfileBook = () => {
   const { data, isLoading } = useProfileQuery({});
 
   return (
-    <div>
+    <div className="min-h-screen">
       <Container>
         <SMBreadcrumb
           items={[
