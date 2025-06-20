@@ -1,277 +1,222 @@
 "use client";
-import { Button, Col, Row, message } from "antd";
+
+import { Button, message, Skeleton } from "antd";
 import { useRouter } from "next/navigation";
 import { SubmitHandler } from "react-hook-form";
-
 import Form from "@/components/forms/form";
 import FormInput from "@/components/forms/formInput";
-import {
-  useCreatUserMutation,
-  useUserLoginMutation,
-} from "@/redux/api/authApi";
 
-import { registerSchema } from "@/schemas/regiser";
+import { useCreatUserMutation, useUserLoginMutation } from "@/redux/api/authApi";
+
 import { storeUserInfo } from "@/services/auth.service";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Link from "next/link.js";
+import Link from "next/link";
+import { motion } from "framer-motion";
 import { useState } from "react";
-import FormTextArea from "../forms/FormTextArea.tsx";
-import { motion } from 'framer-motion';  // <-- import framer-motion
-import Image from "next/image.js";
 import SMBreadcrumb from "@/components/ui/Breadcrumb";
-type FormValues = {
-  id: string;
+import { registerSchema } from "@/schemas/regiser";
+import FormTextArea from "../forms/FormTextArea.tsx";
+
+interface FormValues {
+  name: string;
+  email: string;
+  contactNumber: string;
+  address: string;
   password: string;
-};
+}
+
+interface ApiResponse {
+  success: boolean;
+  data?: { email: string };
+  accessToken?: string;
+  message?: string;
+}
 
 const RegisterPage = () => {
-  const [passwords, setPassword] = useState("123456Aa");
-  const [creatUser] = useCreatUserMutation();
-  const [userLogin] = useUserLoginMutation();
-
+  const [creatUser, { isLoading: isCreating }] = useCreatUserMutation();
+  const [userLogin, { isLoading: isLoggingIn }] = useUserLoginMutation();
   const router = useRouter();
+  const [showSkeleton, setShowSkeleton] = useState(true);
 
-  console.log(passwords);
-  const onSubmit: SubmitHandler<FormValues> = async (data: any) => {
-    console.log(passwords);
-    setTimeout(async () => {
-      try {
-        setPassword(data?.password);
-        const res: any = await creatUser({ profileImg: "", ...data }).unwrap();
-        if (res?.success) {
-          message.success("User Register Success");
-          setTimeout(async () => {
-            try {
-              const ress: any = await userLogin({
-                email: res?.data?.email,
-                password: passwords,
-              }).unwrap();
+  // Simulate initial loading for skeleton (replace with actual logic if needed)
+  setTimeout(() => setShowSkeleton(false), 1000);
 
-              if (ress?.success) {
-                storeUserInfo({ accessToken: ress?.accessToken });
-                router.push("/");
-                message.success("User Login Success");
-              } else {
-                message.success("Login New Email & Password ");
-                router.push("/login");
-              }
-            } catch (error) {
-              console.error(error);
-            }
-          }, 2000);
-        } else {
-          message.error("User Register Failed");
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    try {
+      const res: ApiResponse = await creatUser({ profileImg: "", ...data }).unwrap();
+      if (res?.success) {
+        message.success("User Registered Successfully");
+        try {
+          const loginRes: ApiResponse = await userLogin({
+            email: data.email,
+            password: data.password,
+          }).unwrap();
+          if (loginRes?.success && loginRes?.accessToken) {
+            storeUserInfo({ accessToken: loginRes.accessToken });
+            router.push("/");
+            message.success("User Logged In Successfully");
+          } else {
+            message.error("Auto-login failed. Please log in manually.");
+            router.push("/login");
+          }
+        } catch (error) {
+          message.error("Auto-login failed. Please log in manually.");
+          router.push("/login");
         }
-      } catch (error) {
-        console.error(error);
+      } else {
+        message.error(res?.message || "User Registration Failed");
       }
-    }, 1000);
+    } catch (error: any) {
+      message.error(error?.message || "Registration failed. Please try again.");
+    }
   };
 
+  // Skeleton Loading
+  if (showSkeleton) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-900 bg-[url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1920&auto=format&fit=crop')] bg-cover bg-center">
+        <div className="bg-white/80 backdrop-blur-md p-8 rounded-2xl shadow-2xl max-w-xl w-full">
+          <Skeleton active avatar paragraph={{ rows: 1 }} />
+          <Skeleton.Input active block className="mt-4" />
+          <Skeleton.Input active block className="mt-4" />
+          <Skeleton.Input active block className="mt-4" />
+          <Skeleton.Input active block className="mt-4" />
+          <Skeleton.Input active block className="mt-4" />
+          <Skeleton.Button active block className="mt-6" />
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <Row
-      align={"middle"}
-      justify={"center"}
-      style={{
-        minHeight: "100vh",
-        backgroundColor: "#f8fafc",
-      }}
-    >
-      <Col
-        xs={24} sm={12} md={12} lg={10} 
-        style={{
-          padding: "0 30px",
-        }}
+    <div className="min-h-screen flex items-center justify-center bg-gray-900 bg-[url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1920&auto=format&fit=crop')] bg-cover bg-center">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="bg-white/90 backdrop-blur-lg p-8 rounded-2xl shadow-2xl max-w-xl w-full"
       >
-        <motion.div
-          initial={{ opacity: 0, y: -50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          style={{
-            padding: "80px 20px 40px 20px",
-            borderRadius: "10px",
-            backgroundColor: "white",
-            boxShadow: "0 0 10px rgba(0,0,0,0.1)",
-            position: "relative",
-          }}
-        >
-          <motion.div
-            initial={{ opacity: 0, y: -30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            style={{
-              height: "120px",
-              borderRadius: "20px",
-              width: "90%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              position: "absolute",
-              top: "-70px",
-              backgroundColor: "black",
-              color: "white",
-              padding: "0 10px",
-            }}
-          >
-            <SMBreadcrumb
-                items={[
-                  { label: "", path: "/" },
-                 
-                ]}
-                style={{
-                  color: "#fff",
-                  fontSize: "17px",
-                }}
-              />
-            <h1 style={{ fontSize: "2.5rem" }}>Sign Up</h1>
-          </motion.div>
-
-          <Form submitHandler={onSubmit} resolver={yupResolver(registerSchema)}>
-            <>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.5 }}
-                style={{ margin: "15px 0" }}
-              >
-                <FormInput
-                  name="name"
-                  type="text"
-                  size="large"
-                  placeholder="Enter your Full Name"
-                  label="User Name"
-                />
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.6 }}
-              >
-                <FormInput
-                  name="email"
-                  type="email"
-                  size="large"
-                  placeholder="Enter your email"
-                  label="User Email"
-                />
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.7 }}
-                style={{ margin: "15px 0" }}
-              >
-                <FormInput
-                  name="contactNumber"
-                  type="number"
-                  size="large"
-                  placeholder="Enter your contact number"
-                  label="User Contact Number"
-                />
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.8 }}
-              >
-                <FormTextArea
-                  name="address"
-                  placeholder="Provide address"
-                  label="User Address"
-                />
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.9 }}
-                style={{ margin: "15px 0" }}
-              >
-                <FormInput
-                  name="password"
-                  type="password"
-                  size="large"
-                  placeholder="Password"
-                  label="User Password"
-                />
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5, delay: 1 }}
-              >
-                <Button
-                  style={{
-                    width: "100%",
-                    margin: "15px 0",
-                  
-                  }}
-                  type="primary"
-                  htmlType="submit"
-                >
-                  Register
-                </Button>
-              </motion.div>
-
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5, delay: 1.1 }}
-                style={{
-                  textAlign: "center",
-                  marginTop: "10px",
-                }}
-              >
-                already have an account ? &nbsp;
-                <Link
-                  style={{
-                    color: "black",
-                    fontWeight: "bold",
-                    fontSize: "15px",
-                  }}
-                  href="/login"
-                >
-                  login here
-                </Link>
-              </motion.p>
-            </>
-          </Form>
-        </motion.div>
-      </Col>
-
-      {/* Side Image Section */}
-      <Col
-        xs={0}
-        sm={0}
-        md={12}
-        lg={14}
-        xl={12}
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: "#f0f2f5",
-        }}
-      >
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <Image
-            src="https://res.cloudinary.com/ddcvlgbog/image/upload/v1734263815/computer-login-concept-illustration_114360-7962_wznc7w.avif" // Replace with your image URL
-            alt="Login Illustration"
-            width={500}
-            height={500}
-            style={{ objectFit: "cover", borderRadius: "8px" }}
+        {/* Header */}
+        <div className="text-center mb-8">
+          <SMBreadcrumb
+            items={[{ label: "Home", path: "/" }]}
+        
           />
-        </motion.div>
-      </Col>
-    </Row>
+          <motion.h1
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+            className="text-3xl font-bold text-gray-800 mt-2"
+          >
+            Create Account
+          </motion.h1>
+        </div>
+
+        {/* Register Form */}
+        <Form submitHandler={onSubmit} resolver={yupResolver(registerSchema)} aria-label="Registration form">
+          <div className="space-y-6">
+       <div className="flex gap-4">     <motion.div
+              initial={{ x: -20, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+            >
+              <FormInput
+                name="name"
+                type="text"
+                size="large"
+                placeholder="Full Name"
+                label="Full Name"
+                required
+               
+              />
+            </motion.div>
+            <motion.div
+              initial={{ x: -20, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ delay: 0.4, duration: 0.5 }}
+            >
+              <FormInput
+                name="email"
+                type="email"
+                size="large"
+                placeholder="Email address"
+                label="Email"
+                required
+                
+              />
+            </motion.div>
+            </div>
+        <div className="flex gap-4">    <motion.div
+              initial={{ x: -20, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ delay: 0.5, duration: 0.5 }}
+            >
+              <FormInput
+                name="contactNumber"
+                type="text" // Changed to text to handle various phone formats
+                size="large"
+                placeholder="Contact Number"
+                label="Contact Number"
+                required
+              
+              />
+            </motion.div> 
+            <motion.div
+              initial={{ x: -20, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ delay: 0.7, duration: 0.5 }}
+            >
+              <FormInput
+                name="password"
+                type="password"
+                size="large"
+                placeholder="Password"
+                label="Password"
+                required
+                
+              />
+            </motion.div>
+            </div>
+            <motion.div
+              initial={{ x: -20, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ delay: 0.6, duration: 0.5 }}
+            >
+              <FormTextArea
+                name="address"
+                placeholder="Enter your address"
+                label="Address"
+                rows={4}
+              
+              />
+            </motion.div>
+           
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.8, duration: 0.5 }}
+            >
+              <Button
+                type="primary"
+                htmlType="submit"
+                size="large"
+                loading={isCreating || isLoggingIn}
+                className="w-full  bg-blue-600 hover:bg-blue-700 border-none rounded-xl h-12 text-base"
+                disabled={isCreating || isLoggingIn}
+              >
+                {isCreating || isLoggingIn ? "Registering..." : "Sign Up"}
+              </Button>
+            </motion.div>
+            <div className="text-center text-gray-600">
+              Already have an account?{" "}
+              <Link href="/login" className="text-blue-600 font-semibold hover:underline">
+                Sign in
+              </Link>
+            </div>
+          </div>
+        </Form>
+      </motion.div>
+    </div>
   );
 };
 

@@ -1,18 +1,18 @@
 "use client";
+
 import Form from "@/components/forms/form";
 import FormInput from "@/components/forms/formInput";
 import { useUserLoginMutation } from "@/redux/api/authApi";
 import { loginSchema } from "@/schemas/login";
 import { storeUserInfo } from "@/services/auth.service";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, Col, Row, message } from "antd";
+import { Button, Skeleton, message } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { SubmitHandler } from "react-hook-form";
-import { motion } from "framer-motion"; // For animation
-import Image from "next/image"; // For responsive images
+import { motion } from "framer-motion";
+import { useState } from "react";
 import SMBreadcrumb from "@/components/ui/Breadcrumb";
-
 
 type FormValues = {
   email: string;
@@ -20,13 +20,16 @@ type FormValues = {
 };
 
 const LoginPage = () => {
-  const [userLogin] = useUserLoginMutation();
+  const [userLogin, { isLoading }] = useUserLoginMutation();
   const router = useRouter();
+  const [showSkeleton, setShowSkeleton] = useState(true);
 
-  const onSubmit: SubmitHandler<FormValues> = async (data: any) => {
+  // Simulate initial loading for skeleton (replace with actual logic if needed)
+  setTimeout(() => setShowSkeleton(false), 1000);
+
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
     try {
       const res: any = await userLogin({ ...data });
-
       if (res?.data?.accessToken) {
         router.push("/");
         message.success("User Login Success");
@@ -34,152 +37,108 @@ const LoginPage = () => {
       } else {
         message.error("User Login Failed. Try again later.");
       }
-    } catch (error) {
-      console.error(error);
-      message.error("An error occurred. Please try again.");
+    } catch (error: any) {
+      message.error(error?.message || "An error occurred. Please try again.");
     }
   };
 
+  // Skeleton Loading
+  if (showSkeleton) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-900 bg-[url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1920&auto=format&fit=crop')] bg-cover bg-center">
+        <div className="bg-white/80 backdrop-blur-md p-8 rounded-2xl shadow-2xl max-w-xl w-full">
+          <Skeleton active avatar paragraph={{ rows: 1 }} />
+          <Skeleton.Input active block className="mt-6" />
+          <Skeleton.Input active block className="mt-4" />
+          <Skeleton.Button active block className="mt-6" />
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <Row
-      align={"middle"}
-      justify={"center"}
-      style={{
-        minHeight: "100vh",
-        backgroundColor: "#f8fafc",
-      }}
-    >
-      <Col xs={24} sm={16} md={12} lg={10} xl={8} style={{ position: "relative" }}>
-        <motion.div
-          initial={{ opacity: 0, x: -100 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <div
-            style={{
-              padding: "80px 20px 40px 20px",
-              borderRadius: "10px",
-              backgroundColor: "white",
-              boxShadow: "0 0 10px rgba(0,0,0,0.1)",
-              position: "relative",
-            }}
-          >
-            <div
-              style={{
-                height: "120px",
-                borderRadius: "20px",
-                width: "90%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                position: "absolute",
-                top: "-70px",
-                backgroundColor: "black",
-                color: "white",
-                padding: "0 10px",
-              }}
-            >
-               <SMBreadcrumb
-                items={[
-                  { label: "", path: "/" },
-                 
-                ]}
-                style={{
-                  color: "#fff",
-                  fontSize: "17px",
-                }}
-              />
-              <h1 style={{ fontSize: "2.5rem" }}>Sign In</h1>
-            </div>
-
-            <Form submitHandler={onSubmit} resolver={yupResolver(loginSchema)}>
-              <>
-                <div>
-                  <FormInput
-                    name="email"
-                    type="email"
-                    size="large"
-                    placeholder="Enter your email"
-                    label="User Email"
-                  />
-                </div>
-                <div
-                  style={{
-                    margin: "15px 0",
-                  }}
-                >
-                  <FormInput
-                    name="password"
-                    type="password"
-                    size="large"
-                    placeholder="Password"
-                    label="User Password"
-                  />
-                </div>
-                <Button
-                  style={{
-                    width: "100%",
-                    margin: "15px 0",
-                  }}
-                  type="primary"
-                  htmlType="submit"
-                >
-                  Login
-                </Button>
-
-                <p
-                  style={{
-                    textAlign: "center",
-                    marginTop: "10px",
-                  }}
-                >
-                  Don’t have an account? &nbsp;
-                  <Link
-                    style={{
-                      color: "black",
-                      fontWeight: "bold",
-                      fontSize: "15px",
-                    }}
-                    href="/register"
-                  >
-                    Sign up
-                  </Link>
-                </p>
-              </>
-            </Form>
-          </div>
-        </motion.div>
-      </Col>
-
-      {/* Image Section */}
-      <Col
-        xs={0}
-        sm={0}
-        md={12}
-        lg={14}
-        xl={12}
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: "#f0f2f5",
-        }}
+    <div className="min-h-screen flex items-center justify-center bg-gray-900 bg-[url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1920&auto=format&fit=crop')] bg-cover bg-center">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="bg-white/90 backdrop-blur-lg p-8 rounded-2xl shadow-2xl max-w-xl w-full"
       >
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <Image
-            src="https://res.cloudinary.com/ddcvlgbog/image/upload/v1734263815/computer-login-concept-illustration_114360-7962_wznc7w.avif" // Replace with your image URL
-            alt="Login Illustration"
-            width={500}
-            height={500}
-            style={{ objectFit: "cover", borderRadius: "8px" }}
+        {/* Header */}
+        <div className="text-center mb-8">
+          <SMBreadcrumb
+            items={[{ label: "Home", path: "/" }]}
+            
           />
-        </motion.div>
-      </Col>
-    </Row>
+          <motion.h1
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+            className="text-3xl font-bold text-gray-800 mt-2"
+          >
+            Welcome Back
+          </motion.h1>
+        </div>
+
+        {/* Login Form */}
+        <Form submitHandler={onSubmit} resolver={yupResolver(loginSchema)}>
+          <div className="space-y-6">
+            <motion.div
+              initial={{ x: -20, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+            >
+              <FormInput
+                name="email"
+                type="email"
+                size="large"
+                placeholder="Email address"
+                label="Email"
+                required
+                
+              />
+            </motion.div>
+            <motion.div
+              initial={{ x: -20, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ delay: 0.4, duration: 0.5 }}
+            >
+              <FormInput
+                name="password"
+                type="password"
+                size="large"
+                placeholder="Password"
+                label="Password"
+                required
+               
+              />
+            </motion.div>
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.5, duration: 0.5 }}
+            >
+              <Button
+                type="primary"
+                htmlType="submit"
+                size="large"
+                loading={isLoading}
+                className="w-full bg-blue-600 hover:bg-blue-700 border-none rounded-xl h-12 text-base"
+                disabled={isLoading}
+              >
+                {isLoading ? "Logging in..." : "Sign In"}
+              </Button>
+            </motion.div>
+            <div className="text-center text-gray-600">
+              Don’t have an account?{" "}
+              <Link href="/register" className="text-blue-600 font-semibold hover:underline">
+                Sign up
+              </Link>
+            </div>
+          </div>
+        </Form>
+      </motion.div>
+    </div>
   );
 };
 
