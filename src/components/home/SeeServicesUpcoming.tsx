@@ -1,10 +1,10 @@
-"use client";
-import Loading from "@/app/loading";
-import { services_upcoming } from "@/constants/golobal";
-import { useServicessQuery } from "@/redux/api/serviceApi";
-import { Avatar, Button, Card, Col, Rate, Row } from "antd";
-import Link from "next/link";
-import { motion } from "framer-motion";
+'use client';
+import Loading from '@/app/loading';
+import { services_upcoming } from '@/constants/golobal';
+import { useServicessQuery } from '@/redux/api/serviceApi';
+import { Avatar, Button, Card, Col, Rate, Row } from 'antd';
+import Link from 'next/link';
+import { motion } from 'framer-motion';
 
 const SeeServicesUpcoming = () => {
   const { data, isLoading, refetch } = useServicessQuery({});
@@ -22,15 +22,15 @@ const SeeServicesUpcoming = () => {
       {/* Header Section */}
       <div
         style={{
-          padding: "30px 0",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
+          padding: '30px 0',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
         }}
       >
         <div>
           <motion.h1
-            style={{ fontSize: "50px", color: "#007bff" }}
+            style={{ fontSize: '50px', color: '#007bff' }}
             initial={{ x: -50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.8 }}
@@ -38,7 +38,7 @@ const SeeServicesUpcoming = () => {
             Upcoming Services
           </motion.h1>
           <motion.p
-            style={{ marginTop: "10px", fontSize: "20px", color: "#808080" }}
+            style={{ marginTop: '10px', fontSize: '20px', color: '#808080' }}
             initial={{ x: -50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -55,10 +55,10 @@ const SeeServicesUpcoming = () => {
             <Button
               type="primary"
               style={{
-                backgroundColor: "#FF8C00",
-                color: "#fff",
-                borderRadius: "5px",
-                width: "120px",
+                backgroundColor: '#007BFF',
+                color: '#fff',
+                borderRadius: '5px',
+                width: '120px',
               }}
             >
               See All
@@ -68,13 +68,18 @@ const SeeServicesUpcoming = () => {
       </div>
 
       {/* Services Section */}
-      <Row gutter={[16, 16]}
-        style={{ margin: "0 auto", justifyContent: "center" }}>
+      <Row
+        gutter={[16, 16]}
+        style={{ margin: '0 auto', justifyContent: 'center' }}
+      >
         {services_upcoming?.slice(0, 8)?.map((service, i) => (
           <Col
             key={i}
-            xs={24} sm={12} md={8} lg={6}
-            style={{ display: "flex", justifyContent: "center" }}
+            xs={24}
+            sm={12}
+            md={8}
+            lg={6}
+            style={{ display: 'flex', justifyContent: 'center' }}
           >
             <motion.div
               whileHover={{ scale: 1.05 }}
@@ -83,7 +88,7 @@ const SeeServicesUpcoming = () => {
             >
               <Card
                 hoverable
-                style={{ width: 260, margin: "20px 0" }}
+                style={{ width: 260, margin: '20px 0' }}
                 cover={
                   <motion.div
                     initial={{ opacity: 0, scale: 0.8 }}
@@ -97,32 +102,32 @@ const SeeServicesUpcoming = () => {
                 <div>
                   <div
                     style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
                     }}
                   >
                     <p
                       style={{
-                        fontSize: "14px",
-                        fontWeight: "bold",
-                        color: "#333",
+                        fontSize: '14px',
+                        fontWeight: 'bold',
+                        color: '#333',
                       }}
                     >
                       {service?.price_range} ৳
                     </p>
                     <Rate
-                      style={{ fontSize: "12px" }}
+                      style={{ fontSize: '12px' }}
                       allowHalf
                       defaultValue={service?.rating}
                     />
                   </div>
                   <p
                     style={{
-                      marginTop: "8px",
-                      fontSize: "16px",
-                      fontWeight: "bold",
-                      color: "#333",
+                      marginTop: '8px',
+                      fontSize: '16px',
+                      fontWeight: 'bold',
+                      color: '#333',
                     }}
                   >
                     {service?.name}
