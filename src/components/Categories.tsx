@@ -6,6 +6,7 @@ import Meta from 'antd/es/card/Meta';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import Subscribe from './ui/Subscribe';
+import CategorySkeleton from './skeleton/category.skeleton';
 
 interface Category {
   id: string;
@@ -23,7 +24,7 @@ const CategoriesOption = () => {
   };
 
   if (isLoading) {
-    return <div>sf</div>;
+    return <CategorySkeleton />;
   }
 
   return (
