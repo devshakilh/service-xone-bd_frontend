@@ -1,34 +1,35 @@
-"use client";
-import { useCreatebookingMutation } from "@/redux/api/bookingApi";
-import { message } from "antd";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import BookingDate from "./BookingDate/BookingDate";
-import BookingImformation from "./BookingDate/BookingImformation";
-import StepperForm from "./StepperForm/StepperForm";
+'use client';
 
-const BookingSchudle = ({ service }: { service: any }) => {
+import { message } from 'antd';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import BookingDate from './BookingDate/BookingDate';
+import StepperForm from './StepperForm/StepperForm';
+import BookingInformation from './BookingDate/BookingImformation';
+import { useCreatebookingMutation } from '@/redux/api/bookingApi';
+
+const BookingSchedule = ({ service }: { service: any }) => {
   const router = useRouter();
 
-  const [startTime, setStartTime] = useState<string>("");
-  const [endTime, setEndTime] = useState<string>("");
-  const [newDate, setNewDates] = useState<string>("");
+  const [startTime, setStartTime] = useState<string>('');
+  const [endTime, setEndTime] = useState<string>('');
+  const [newDate, setNewDate] = useState<string>('');
 
   const steps = [
     {
-      title: "Booking Date & Time",
+      title: 'Booking Date & Time',
       content: (
         <BookingDate
-          setNewDates={setNewDates}
+          setNewDate={setNewDate}
           setStartTime={setStartTime}
           setEndTime={setEndTime}
         />
       ),
     },
     {
-      title: "Booking Information",
+      title: 'Booking Information',
       content: (
-        <BookingImformation
+        <BookingInformation
           service={service}
           newDate={newDate}
           endTime={endTime}
@@ -38,40 +39,39 @@ const BookingSchudle = ({ service }: { service: any }) => {
     },
   ];
 
-  const [createbooking] = useCreatebookingMutation();
+  const [createBooking] = useCreatebookingMutation();
 
-  const handleStudentSubmit = async (values: any) => {
+  const handleSubmit = async (values: any) => {
     const obj = { endTime, startTime, serviceId: service?.id, date: newDate };
 
     try {
-      const res = await createbooking(obj);
-
-      // @ts-ignore
-      if (res?.data?.success) {
-        router.push("/booking");
-        // @ts-ignore
-        message.success(res?.data?.message);
+      const res = await createBooking(obj);
+      if ('data' in res && res.data?.success) {
+        router.push('/booking');
+        message.success(res.data.message);
       } else {
-        // @ts-ignore
-        message.error("Time slot already booked");
+        message.error('Time slot already booked');
       }
     } catch (err: any) {
       console.error(err.message);
+      message.error('Failed to create booking');
     }
   };
 
   return (
-    <div className="mb-12">
-      <h1 className="mb-6">BookingSchudle</h1>
+    <div style={{ marginBottom: '3rem', padding: '0 16px' }}>
+      <h1
+        style={{ marginBottom: '1.5rem', fontSize: 'clamp(20px, 4vw, 24px)' }}
+      >
+        Booking Schedule
+      </h1>
       <StepperForm
-        persistKey="booking-schudle"
-        submitHandler={(value) => {
-          handleStudentSubmit(value);
-        }}
+        persistKey="booking-schedule"
+        submitHandler={(value) => handleSubmit(value)}
         steps={steps}
       />
     </div>
   );
 };
 
-export default BookingSchudle;
+export default BookingSchedule;
