@@ -56,7 +56,7 @@ const BlogeCardHome = () => {
               </p>
               <Meta
                 title={blog?.title}
-                description={blog?.content.slice(0, 240)}
+                description={blog?.content.slice(0, 70)}
               />
             </Card>
           </Col>
