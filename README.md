@@ -4,7 +4,7 @@ Welcome to the Service-Xone-BD Service Booking and Management Website repository
 
 ## Live Site
 
-- **Service-Xone-BD Front-End:** [Live Site](https://Service-Xone-BD-front-end.vercel.app/)
+- **Service-Xone-BD Front-End:** [Live Site](https://service-xone-bd-frontend.vercel.app)
 - **Service-Xone-BD Dashboard:** [Admin Dashboard](https://Service-Xone-BD-dashboard.vercel.app/)
 
 ## Project Overview
@@ -16,6 +16,7 @@ The Service-Xone-BD Service Booking and Management Website is a powerful web app
 The project is built with the following technologies:
 
 - **Front-End:**
+
   - [Next.js](https://nextjs.org/)
   - [Ant Design](https://ant.design/)
   - [Redux Toolkit (RTK)](https://redux-toolkit.js.org/)
