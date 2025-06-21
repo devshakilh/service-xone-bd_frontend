@@ -5,12 +5,13 @@ import { useServicessQuery } from '@/redux/api/serviceApi';
 import { Avatar, Button, Card, Col, Rate, Row } from 'antd';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import ServiceSkeletonLoader from '../skeleton/service.skeleton';
 
 const SeeServicesUpcoming = () => {
   const { data, isLoading, refetch } = useServicessQuery({});
 
   if (isLoading) {
-    return <Loading />;
+    return <ServiceSkeletonLoader />;
   }
 
   return (
