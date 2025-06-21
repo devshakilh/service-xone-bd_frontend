@@ -186,31 +186,40 @@ const ServicesItem = () => {
         </div>
       </div>
 
-      <Row gutter={[20, 20]} style={{ marginTop: '70px', padding: '20px 0' }}>
+      <Row gutter={[16, 16]} style={{ marginTop: '100px', padding: '20px 0' }}>
         {services?.length > 0 ? (
           services.map((service: any, i: any) => (
-            <Col span={6} key={i}>
+            <Col xs={24} sm={12} md={8} lg={6} key={i}>
               <Card
                 hoverable
                 style={{
-                  width: 300,
-                  marginTop: '17px',
+                  marginTop: '16px',
                   transition: 'transform 0.3s',
                 }}
                 onMouseEnter={(e) =>
-                  (e.currentTarget.style.transform = 'scale(1.05)')
+                  (e.currentTarget.style.transform = 'scale(1.01)')
                 }
                 onMouseLeave={(e) =>
                   (e.currentTarget.style.transform = 'scale(1)')
                 }
                 cover={
-                  <Avatar shape="square" size={300} src={service?.imageLink} />
+                  <Avatar
+                    shape="square"
+                    size="large"
+                    src={service?.imageLink}
+                    style={{
+                      width: '100%',
+                      height: '200px',
+                      objectFit: 'cover',
+                    }}
+                  />
                 }
               >
                 <div
                   onClick={() =>
                     router.push(`/services/details/${service?.id}`)
                   }
+                  style={{ cursor: 'pointer' }}
                 >
                   <div
                     style={{
@@ -219,7 +228,7 @@ const ServicesItem = () => {
                       alignItems: 'center',
                     }}
                   >
-                    <p style={{ fontSize: '25px', fontWeight: 'bold' }}>
+                    <p style={{ fontSize: '20px', fontWeight: 'bold' }}>
                       {service?.price} ৳
                     </p>
                     <div
@@ -229,9 +238,9 @@ const ServicesItem = () => {
                         gap: '5px',
                       }}
                     >
-                      <p style={{ fontSize: '16px' }}>2.5</p>
+                      <p style={{ fontSize: '14px' }}>2.5</p>
                       <Rate
-                        style={{ fontSize: '14px' }}
+                        style={{ fontSize: '12px' }}
                         allowHalf
                         defaultValue={2.5}
                       />
@@ -242,7 +251,7 @@ const ServicesItem = () => {
                     title={
                       <p
                         style={{
-                          fontSize: '20px',
+                          fontSize: '18px',
                           fontWeight: 'bold',
                           color: '#007bff',
                         }}
@@ -270,31 +279,35 @@ const ServicesItem = () => {
             </Col>
           ))
         ) : (
-          <Empty
-            style={{
-              margin: 'auto',
-              marginTop: '100px',
-              marginBottom: '100px',
-            }}
-          />
+          <Col span={24}>
+            <Empty
+              style={{
+                margin: 'auto',
+                marginTop: '100px',
+                marginBottom: '100px',
+              }}
+            />
+          </Col>
         )}
       </Row>
 
-      <Row gutter={[20, 20]}>
+      <Row gutter={[16, 16]}>
         <Col
+          span={24}
           style={{
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
             margin: '20px 0',
           }}
-          span={24}
         >
           <Pagination
             showSizeChanger
             current={current}
             onChange={onChange}
-            total={500}
+            onShowSizeChange={onPaginationChange}
+            total={meta?.total || 500}
+            responsive
           />
         </Col>
       </Row>
