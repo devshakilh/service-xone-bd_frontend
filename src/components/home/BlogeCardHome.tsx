@@ -5,15 +5,14 @@ import { CalendarOutlined } from '@ant-design/icons';
 import { Avatar, Card, Col, Row } from 'antd';
 import Meta from 'antd/es/card/Meta';
 import { motion } from 'framer-motion';
+import BlogCardSkeleton from '../skeleton/bloge-card-home.skeleton';
 
 const BlogeCardHome = () => {
   const { data, isLoading } = useBlogsQuery({});
   const blogs = data?.data;
 
   if (isLoading) {
-    return (
-      <div className="text-center text-white py-4 bg-blue-700">Loading...</div>
-    );
+    return <BlogCardSkeleton />;
   }
 
   const cardVariants = {
