@@ -27,7 +27,7 @@ const BookingRequst = ({ params }: any) => {
           <h1
             style={{
               color: '#fff',
-              fontSize: '50px',
+              fontSize: '48px',
               fontWeight: 'bold',
             }}
           >
