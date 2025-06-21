@@ -1,107 +1,37 @@
-// import FaqsSection from "@/components/FaqsSection";
-// import SMBreadcrumb from "@/components/ui/Breadcrumb";
-// import Container from "@/components/ui/container";
-// import Footer from "@/components/ui/footer";
-// import Navbar from "@/components/ui/navHader";
-// import { Metadata } from "next";
-
-// export const metadata: Metadata = {
-//   title: "Service-Xone-BD | Faqs",
-// };
-
-// const Faqs = () => {
-//   return (
-//     <div>
-//       <Navbar />
-
-//       <Container>
-//         {/* bredcone and baner */}
-//         <div
-//           style={{
-//             width: "100%",
-//             height: "200px",
-//             backgroundColor: "#317f8c",
-//             margin: "20px 0",
-//             borderRadius: "15px",
-//             display: "flex",
-//             flexDirection: "column",
-//             justifyContent: "center",
-//             alignItems: "center",
-//             position: "relative",
-//           }}
-//         >
-//           <h1
-//             style={{
-//               color: "#fff",
-//               fontSize: "50px",
-//               fontWeight: "bold",
-//             }}
-//           >
-//             Frequently Asked Questions
-//           </h1>
-//           <br />
-//           <div>
-//             <SMBreadcrumb
-//               items={[
-//                 { label: "Home", path: "/" },
-//                 { label: "Faqs", path: "/faq" },
-//               ]}
-//               style={{
-//                 color: "#fff",
-//                 fontSize: "17px",
-//               }}
-//             />
-//           </div>
-//         </div>
-
-//         <FaqsSection />
-//       </Container>
-
-//       <Footer />
-//     </div>
-//   );
-// };
-
-// export default Faqs;
-
-"use client"
-import FaqsSection from "@/components/FaqsSection";
-import SMBreadcrumb from "@/components/ui/Breadcrumb";
-import Container from "@/components/ui/container";
-import Footer from "@/components/ui/footer";
-import Navbar from "@/components/ui/navHader";
-import { Metadata } from "next";
+"use client";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ChevronDown, ChevronUp } from "lucide-react"; // Importing icons
-
-
+import { ChevronDown, ChevronUp } from "lucide-react";
+import Container from "@/components/ui/container";
+import Navbar from "@/components/ui/navHader";
+import Footer from "@/components/ui/footer";
+import SMBreadcrumb from "@/components/ui/Breadcrumb";
 
 const faqData = [
   {
     question: "How do I book a service?",
     answer:
-      "To book a service, simply visit our service page, select the service you need, and click on the 'Book Now' button. Follow the instructions to confirm your booking.",
+      "Visit our service page, select your desired service, and click 'Book Now' to follow the booking instructions.",
   },
   {
     question: "What payment methods are accepted?",
     answer:
-      "We accept payments through major credit cards, debit cards, Apple Pay, and PayPal. Choose the payment method that works best for you during checkout.",
+      "We accept major credit/debit cards, Apple Pay, and PayPal. Choose your preferred method at checkout.",
   },
   {
     question: "Can I modify or cancel my booking?",
     answer:
-      "Yes, you can modify or cancel your booking up to 24 hours before the scheduled service. After that, cancellations may incur a fee.",
+      "You can modify or cancel up to 24 hours before the service. Late cancellations may incur a fee.",
   },
   {
     question: "What happens if the service provider is late?",
     answer:
-      "If the service provider is delayed beyond 15 minutes, we offer a discount or reschedule the service free of charge. Please contact us if this happens.",
+      "If delayed beyond 15 minutes, we offer a discount or free rescheduling. Contact us for assistance.",
   },
   {
     question: "How can I contact customer support?",
     answer:
-      "You can reach our customer support team via email at support@servicexonebd.com or call us at +8801234567890 during business hours.",
+      "Reach us via email at support@servicexonebd.com or call +8801234567890 during business hours.",
   },
 ];
 
@@ -109,111 +39,77 @@ const Faqs = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const handleToggle = (index: number) => {
-    setActiveIndex(activeIndex === index ? null : index); // Toggle visibility of the answer
+    setActiveIndex(activeIndex === index ? null : index);
   };
 
   return (
-    <div>
-      <Navbar />
-
-      <Container>
-        {/* Banner and Breadcrumb */}
-        <div
-          style={{
-            width: "100%",
-            height: "200px",
-            backgroundColor: "#317f8c",
-            margin: "20px 0",
-            borderRadius: "15px",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            position: "relative",
-          }}
-        >
+    <div className="flex flex-col ">
+       <div>
           <h1
             style={{
-              color: "#fff",
               fontSize: "50px",
-              fontWeight: "bold",
+              color:"#007bff",
+              marginBottom:'12px',
             }}
           >
-            Frequently Asked Questions
+             Frequently Asked Questions
           </h1>
-          <br />
-          <div>
-            <SMBreadcrumb
-              items={[
-                { label: "Home", path: "/" },
-                { label: "Faqs", path: "/faq" },
-              ]}
-              style={{
-                color: "#fff",
-                fontSize: "17px",
-              }}
-            />
-          </div>
+          <p
+            style={{
+              marginTop: "10px",
+              fontSize: "20px",
+              color: "#808080",
+            }}
+          >
+           Top asked questions
+          </p>
         </div>
 
-        {/* FAQ Accordion Section */}
-        <motion.div
-          className="space-y-4"
-          initial="hidden"
-          animate="visible"
-          variants={{
-            hidden: { opacity: 0, y: 20 },
-            visible: {
-              opacity: 1,
-              y: 0,
-              transition: { duration: 0.3, staggerChildren: 0.2 },
-            },
-          }}
-        >
+      <Container >
+        
+      
+        {/* FAQ Accordion */}
+        <div className="max-w-4xl mt-16 mx-auto space-y-4">
           {faqData.map((faq, index) => (
             <motion.div
               key={index}
-              className="faq-item bg-white rounded-lg shadow-md overflow-hidden"
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
-              }}
+              className="bg-white rounded-lg shadow-sm overflow-hidden"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: index * 0.1 }}
             >
-              <motion.div
-                className="p-4 cursor-pointer flex items-center justify-between"
+              <button
+                className="w-full p-5 flex items-center justify-between text-left focus:outline-none"
                 onClick={() => handleToggle(index)}
-                whileHover={{ scale: 1.05 }}
+                aria-expanded={activeIndex === index}
+                aria-controls={`faq-answer-${index}`}
               >
-                <h2 className="text-xl font-semibold text-[#317f8c]">
+                <h2 className="text-lg md:text-xl font-semibold text-gray-700">
                   {faq.question}
                 </h2>
-                {/* Icon for Expand/Collapse */}
-                <span>
-                  {activeIndex === index ? (
-                    <ChevronUp size={24} color="#317f8c" />
-                  ) : (
-                    <ChevronDown size={24} color="#317f8c" />
-                  )}
-                </span>
-              </motion.div>
+                {activeIndex === index ? (
+                  <ChevronUp size={20} className="text-gray-700" />
+                ) : (
+                  <ChevronDown size={20} className="text-gray-700" />
+                )}
+              </button>
               <motion.div
-                className="p-4 bg-gray-100"
+                id={`faq-answer-${index}`}
                 initial={{ height: 0, opacity: 0 }}
                 animate={{
                   height: activeIndex === index ? "auto" : 0,
                   opacity: activeIndex === index ? 1 : 0,
-                  transition: { duration: 0.3 },
                 }}
-                style={{ overflow: "hidden" }}
+                transition={{ duration: 0.3 }}
+                className="overflow-hidden bg-gray-100"
               >
-                <p className="text-gray-700">{faq.answer}</p>
+                <p className="p-5 text-gray-600">{faq.answer}</p>
               </motion.div>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       </Container>
-
-      <Footer />
+     
     </div>
   );
 };
