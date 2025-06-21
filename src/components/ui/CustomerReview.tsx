@@ -114,7 +114,7 @@ const CustomerReview = ({ service }: any) => {
         <Button
           style={{
             marginTop: '1rem',
-            width: '20%',
+            width: '25%',
           }}
           type="primary"
           className="bg-blue-500"

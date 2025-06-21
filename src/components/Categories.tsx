@@ -1,78 +1,73 @@
-"use client";
+'use client';
 
-import { useCategoriesQuery } from "@/redux/api/categorieApi";
-import { Avatar, Card, Col, Empty, Row } from "antd";
-import Meta from "antd/es/card/Meta";
+import { useCategoriesQuery } from '@/redux/api/categorieApi';
+import { Avatar, Card, Col, Empty, Row } from 'antd';
+import Meta from 'antd/es/card/Meta';
+import { useRouter } from 'next/navigation';
+import { motion } from 'framer-motion';
+import Subscribe from './ui/Subscribe';
 
-import Loading from "@/app/loading";
-import { useRouter } from "next/navigation";
-import Subscribe from "./ui/Subscribe";
+interface Category {
+  id: string;
+  title: string;
+  imageLink: string;
+}
 
 const CategoriesOption = () => {
   const { data, isLoading } = useCategoriesQuery({});
-
   const router = useRouter();
+  const categories: Category[] = data?.data || [];
 
-  const categories = data?.data;
-
-  const handelCatagory = (id: string) => {
+  const handleCategory = (id: string) => {
     router.push(`/categories/${id}`);
   };
+
   if (isLoading) {
-    return <Loading />;
+    return <div>sf</div>;
   }
 
   return (
     <>
-      <Row
-        style={{
-          padding: "20px 0",
-        }}
-        gutter={[20, 20]}
-      >
-        {categories?.length > 0 ? (
-          categories?.map((category: any, i: any) => {
-            return (
-              <Col span={4} order={i} key={i}>
+      <Row gutter={[16, 16]} className="mx-auto max-w-7xl px-4 py-8">
+        {categories.length > 0 ? (
+          categories.map((category, i) => (
+            <Col xs={24} sm={12} md={8} lg={6} xl={4} key={category.id}>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                viewport={{ once: true }}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+              >
                 <Card
-                  onClick={() => handelCatagory(category?.id)}
+                  onClick={() => handleCategory(category.id)}
                   cover={
                     <Avatar
-                      style={{
-                        padding: "10px",
-                      }}
-                      size={200}
-                      src={category?.imageLink}
+                      src={category.imageLink || '/fallback-image.jpg'}
+                      alt={category.title}
+                      className="w-full aspect-square object-cover p-4 bg-gradient-to-br from-gray-100 to-gray-200"
                     />
                   }
                   hoverable
-                  style={{ width: 200 }}
-                  loading={isLoading}
+                  className="w-full overflow-hidden rounded-xl border-none bg-white
+
+ shadow-lg hover:shadow-xl transition-shadow"
                 >
                   <Meta
-                    style={{
-                      textAlign: "center",
-                      fontSize: 20,
-                      fontWeight: "bold",
-                      color: "black",
-                    }}
-                    title={category?.title}
+                    title={category.title}
+                    className="text-center text-base font-semibold text-gray-900 py-2"
                   />
                 </Card>
-              </Col>
-            );
-          })
+              </motion.div>
+            </Col>
+          ))
         ) : (
-          <Empty
-            style={{
-              margin: "auto",
-              marginTop: "100px",
-              marginBottom: "100px",
-            }}
-          />
+          <Col span={24} className="flex justify-center py-16">
+            <Empty description="No categories available" />
+          </Col>
         )}
       </Row>
-
       <Subscribe />
     </>
   );
