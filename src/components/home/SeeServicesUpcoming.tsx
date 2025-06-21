@@ -89,14 +89,19 @@ const SeeServicesUpcoming = () => {
             >
               <Card
                 hoverable
-                style={{ width: 260, margin: '20px 0' }}
+                style={{ width: '100%', margin: '20px 0' }}
                 cover={
                   <motion.div
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.8 }}
                   >
-                    <Avatar shape="square" size={260} src={service?.image} />
+                    <Avatar
+                      shape="square"
+                      size={300}
+                      className="w-full h-[200px] object-cover"
+                      src={service?.image}
+                    />
                   </motion.div>
                 }
               >
