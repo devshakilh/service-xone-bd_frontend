@@ -15,8 +15,5 @@ export const naveItems = [
     label: "Blog",
     path: "/blog",
   },
-  {
-    label: "FAQs",
-    path: "/faq",
-  },
+
 ];
