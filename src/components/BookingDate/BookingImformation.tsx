@@ -1,11 +1,11 @@
-"use client";
-import Loading from "@/app/loading";
-import { useProfileQuery } from "@/redux/api/user";
-import { CalendarOutlined, ClockCircleOutlined } from "@ant-design/icons";
-import { Skeleton, Button, Card, Col, Input, Row } from "antd";
-import Meta from "antd/es/card/Meta";
+'use client';
 
-const BookingImformation = ({
+import { useProfileQuery } from '@/redux/api/user';
+import { CalendarOutlined, ClockCircleOutlined } from '@ant-design/icons';
+import { Skeleton, Button, Card, Col, Input, Row } from 'antd';
+import Meta from 'antd/es/card/Meta';
+
+const BookingInformation = ({
   service,
   newDate,
   endTime,
@@ -22,19 +22,18 @@ const BookingImformation = ({
     return (
       <div
         style={{
-          height: "22rem",
-          padding: "1rem",
-          border: "1px solid #e6e6e6",
-          marginTop: "1rem",
-          borderRadius: "0.5rem",
-          backgroundColor: "#e6e6e6",
+          padding: '1rem',
+          border: '1px solid #e6e6e6',
+          marginTop: '1rem',
+          borderRadius: '0.5rem',
+          backgroundColor: '#f5f5f5',
         }}
       >
-        <Row>
-          <Col span={16}>
+        <Row gutter={[16, 16]}>
+          <Col xs={24} lg={16}>
             <Skeleton active paragraph={{ rows: 4 }} />
           </Col>
-          <Col span={8}>
+          <Col xs={24} lg={8}>
             <Skeleton active paragraph={{ rows: 6 }} />
           </Col>
         </Row>
@@ -44,8 +43,10 @@ const BookingImformation = ({
 
   if (isError || !data?.data) {
     return (
-      <div style={{ textAlign: "center", marginTop: "2rem" }}>
-        <h2 style={{ color: "red" }}>Error: Unable to load booking information</h2>
+      <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+        <h2 style={{ color: 'red', fontSize: 'clamp(16px, 3vw, 18px)' }}>
+          Error: Unable to load booking information
+        </h2>
       </div>
     );
   }
@@ -56,99 +57,100 @@ const BookingImformation = ({
   return (
     <div
       style={{
-        height: "22rem",
-        padding: "1rem",
-        border: "1px solid #e6e6e6",
-        marginTop: "1rem",
-        borderRadius: "0.5rem",
-        backgroundColor: "#e6e6e6",
+        padding: '1rem',
+        border: '1px solid #e6e6e6',
+        marginTop: '1rem',
+        borderRadius: '0.5rem',
+        backgroundColor: '#f5f5f5',
       }}
     >
-      <Row>
-        <Col span={16}>
-          <div>
-            <div
-              className="lg:w-[100%] lg:flex"
-              style={{
-                justifyContent: "evenly",
-                gap: "1rem",
-              }}
-            >
-              <Card className="lg:w-[45%]" title="Booking Date">
-                <div
-                  style={{
-                    display: "flex",
-                    gap: "1rem",
-                    alignItems: "center",
-                  }}
-                >
-                  <CalendarOutlined
+      <Row gutter={[16, 16]}>
+        <Col xs={24} lg={16}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '1rem',
+            }}
+          >
+            <Row gutter={[16, 16]}>
+              <Col xs={24} sm={12}>
+                <Card title="Booking Date">
+                  <div
                     style={{
-                      fontSize: "2rem",
-                      color: "#1890ff",
+                      display: 'flex',
+                      gap: '1rem',
+                      alignItems: 'center',
                     }}
-                  />
-                  <Meta title={newDate} />
-                </div>
-              </Card>
-              <Card className="lg:w-[45%]" title="Booking Time">
-                <div
-                  style={{
-                    display: "flex",
-                    gap: "1rem",
-                    alignItems: "center",
-                  }}
-                >
-                  <ClockCircleOutlined
+                  >
+                    <CalendarOutlined
+                      style={{
+                        fontSize: 'clamp(20px, 3vw, 24px)',
+                        color: '#1890ff',
+                      }}
+                    />
+                    <Meta title={newDate} />
+                  </div>
+                </Card>
+              </Col>
+              <Col xs={24} sm={12}>
+                <Card title="Booking Time">
+                  <div
                     style={{
-                      fontSize: "2rem",
-                      color: "#1890ff",
+                      display: 'flex',
+                      gap: '1rem',
+                      alignItems: 'center',
+                      flexWrap: 'wrap',
                     }}
-                  />
-                  <Meta title={startTime} />
-                  To
-                  <Meta title={endTime} />
-                </div>
-              </Card>
-            </div>
-          </div>
-          <div style={{ marginTop: "0.5rem" }}>
-            <Card className="lg:w-[92%]" title={"Booking Information"}>
-              <Row>
-                <Col span={12}>
+                  >
+                    <ClockCircleOutlined
+                      style={{
+                        fontSize: 'clamp(20px, 3vw, 24px)',
+                        color: '#1890ff',
+                      }}
+                    />
+                    <Meta title={startTime} />
+                    <span>To</span>
+                    <Meta title={endTime} />
+                  </div>
+                </Card>
+              </Col>
+            </Row>
+            <Card title="Booking Information">
+              <Row gutter={[16, 16]}>
+                <Col xs={24} sm={12}>
                   <p>
-                    <b>Name : {name} </b>
+                    <b>Name: {name}</b>
                   </p>
                   <p>
-                    <b>Mobile : {contactNumber} </b>
+                    <b>Mobile: {contactNumber}</b>
                   </p>
                   <p>
-                    <b>Address : {contactNumber} </b>
+                    <b>Service Location: {service?.location}</b>
                   </p>
                 </Col>
-                <Col span={12}>
+                <Col xs={24} sm={12}>
                   <p>
-                    <b>Address : {address} </b>
+                    <b>Address: {address}</b>
                   </p>
                   <p>
-                    <b>Email : {email} </b>
-                  </p>
-                  <p>
-                    <b>Service Location : {service?.location} </b>
+                    <b>Email: {email}</b>
                   </p>
                 </Col>
               </Row>
             </Card>
           </div>
         </Col>
-        <Col span={8}>
-          <Card className="lg-w-[100%]" title="Price Summary">
-            <div className="gap-[16px] items-center">
+        <Col xs={24} lg={8}>
+          <Card title="Price Summary">
+            <div
+              style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}
+            >
               <p>
                 <b
-                  className="text-[16px]"
                   style={{
-                    color: "green",
+                    color: 'green',
+                    fontSize: 'clamp(14px, 2vw, 16px)',
                   }}
                 >
                   {title}
@@ -156,17 +158,23 @@ const BookingImformation = ({
               </p>
               <hr />
               <p>
-                <b className="text-[16px]">Price :  {price}  tk</b>
+                <b style={{ fontSize: 'clamp(14px, 2vw, 16px)' }}>
+                  Price: {price} tk
+                </b>
               </p>
-              <p className="text-[16px]">Tax (%) :  {tax} </p>
+              <p style={{ fontSize: 'clamp(12px, 2vw, 14px)' }}>
+                Tax (%): {tax}
+              </p>
             </div>
           </Card>
-          <Card className="lg:w-[100%] mt-2" title="Offer & Discount">
-            <Input
-              placeholder="Enter Coupon Code"
-              className="lg:w-[70%]"
-            />{" "}
-            <Button>Apply</Button>
+          <Card title="Offer & Discount" style={{ marginTop: '1rem' }}>
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+              <Input
+                placeholder="Enter Coupon Code"
+                style={{ flex: '1', minWidth: '150px' }}
+              />
+              <Button>Apply</Button>
+            </div>
           </Card>
         </Col>
       </Row>
@@ -174,4 +182,4 @@ const BookingImformation = ({
   );
 };
 
-export default BookingImformation;
+export default BookingInformation;

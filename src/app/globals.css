@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,7 +6,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: "Roboto Condensed", sans-serif;
+  font-family: 'Roboto Condensed', sans-serif;
 }
 
 /* Container.css */
@@ -32,7 +32,7 @@
   padding: 0 20px;
 }
 .title-font {
-  font-family: "Roboto Condensed", sans-serif;
+  font-family: 'Roboto Condensed', sans-serif;
   font-weight: 700;
   font-size: 24px;
   line-height: 1.25;
@@ -41,7 +41,7 @@
 }
 
 .nav-links {
-  font-family: "Roboto Condensed", sans-serif;
+  font-family: 'Roboto Condensed', sans-serif;
   font-weight: 400;
   font-size: 16px;
   line-height: 1.25;
@@ -55,12 +55,12 @@
 /* Carasol */
 
 .contentStyle {
-  height: "160px";
-  color: "#fff";
-  line-height: "160px";
-  text-align: "center";
-  background: "#364d79";
-  width: "100%";
+  height: '160px';
+  color: '#fff';
+  line-height: '160px';
+  text-align: 'center';
+  background: '#364d79';
+  width: '100%';
 }
 
 /* Footer */
@@ -125,4 +125,3 @@
 }
 
 /* Add styles for the SVGs inside the icons */
-

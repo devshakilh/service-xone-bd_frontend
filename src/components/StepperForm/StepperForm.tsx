@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { getFormLocalStorage, setToLocalStorage } from "@/utils/local-sororage";
-import { Button, Steps, message } from "antd";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { getFormLocalStorage, setToLocalStorage } from '@/utils/local-sororage';
+import { Button, Steps, message } from 'antd';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 
 interface ISteps {
   title?: string;
@@ -27,19 +27,19 @@ const StepperForm = ({
   const router = useRouter();
 
   const [current, setCurrent] = useState<number>(
-    !!getFormLocalStorage("step")
-      ? Number(JSON.parse(getFormLocalStorage("step") as string).step)
+    getFormLocalStorage('step')
+      ? Number(JSON.parse(getFormLocalStorage('step') as string).step)
       : 0
   );
 
   const [savedValues, setSavedValues] = useState(
-    !!getFormLocalStorage(persistKey)
+    getFormLocalStorage(persistKey)
       ? JSON.parse(getFormLocalStorage(persistKey) as string)
-      : ""
+      : {}
   );
 
   useEffect(() => {
-    setToLocalStorage("step", JSON.stringify({ step: current }));
+    setToLocalStorage('step', JSON.stringify({ step: current }));
   }, [current]);
 
   const next = () => {
@@ -57,27 +57,38 @@ const StepperForm = ({
 
   useEffect(() => {
     setToLocalStorage(persistKey, JSON.stringify(watch));
-  }, [watch, persistKey, methods]);
+  }, [watch, persistKey]);
 
   const { handleSubmit, reset } = methods;
 
   const handleStudentOnSubmit = (data: any) => {
     submitHandler(data);
     reset();
-    setToLocalStorage("step", JSON.stringify({ step: 0 }));
+    setToLocalStorage('step', JSON.stringify({ step: 0 }));
     setToLocalStorage(persistKey, JSON.stringify({}));
     navigateLink && router.push(navigateLink);
   };
 
   return (
-    <>
-      <Steps current={current} items={items} />
+    <div style={{ padding: '0 16px' }}>
+      <Steps current={current} items={items} responsive />
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(handleStudentOnSubmit)}>
-          <div>{steps[current].content}</div>
-          <div style={{ marginTop: 24 }}>
+          <div style={{ marginTop: '1.5rem' }}>{steps[current].content}</div>
+          <div
+            style={{
+              marginTop: '1.5rem',
+              display: 'flex',
+              gap: '8px',
+              flexWrap: 'wrap',
+            }}
+          >
             {current < steps.length - 1 && (
-              <Button type="primary" className="text-black shadow-lg" onClick={() => next()}>
+              <Button
+                type="primary"
+                className="text-black shadow-lg"
+                onClick={() => next()}
+              >
                 Next
               </Button>
             )}
@@ -86,20 +97,16 @@ const StepperForm = ({
                 type="primary"
                 htmlType="submit"
                 className="text-black shadow-lg"
-                onClick={() => message.success("Processing complete!")}
+                onClick={() => message.success('Processing complete!')}
               >
                 Done
               </Button>
             )}
-            {current > 0 && (
-              <Button style={{ margin: "0 8px" }} onClick={() => prev()}>
-                Previous
-              </Button>
-            )}
+            {current > 0 && <Button onClick={() => prev()}>Previous</Button>}
           </div>
         </form>
       </FormProvider>
-    </>
+    </div>
   );
 };
 
